@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  title: llbook
+  version: '1.0'
+  description: api docs for llbook api
+servers:
+  - url: 'http://localhost:3326'
+paths:
+  /login:
+    post:
+      summary: ''
+      operationId: post-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  susccess:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+        description: ''
+      description: user login
+  /account:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-account
+      description: ''
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: q
+          description: query keyword
+        - schema:
+            type: string
+            example: yyyymmdd
+          in: query
+          name: time_start
+          description: time_start for created account
+        - schema:
+            type: string
+            example: YYYYMMDD
+          in: query
+          name: time_end
+          description: time_end for created account
+    post:
+      summary: ''
+      operationId: post-account
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                  code:
+                    type: number
+                  msg:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/account'
+                  path:
+                    type: string
+      description: create new account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                fullname:
+                  type: string
+                birth_date:
+                  type: number
+                gender:
+                  type: number
+                  minimum: 0
+                  maximum: 1
+                type:
+                  type: integer
+                active:
+                  type: integer
+                phone:
+                  type: string
+                  pattern: '^[0]{1}[1235789]{1}[0-9]{8}$'
+              required:
+                - username
+                - password
+components:
+  schemas:
+    account:
+      title: account
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        fullname:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        birth_date:
+          type: string
+        gender:
+          type: number
+        type:
+          type: number
+        active:
+          type: boolean
+        verify:
+          type: boolean
+        create_at:
+          type: string
+        created_by:
+          type: string
+        updated_at:
+          type: string
+        updated_by:
+          type: string
