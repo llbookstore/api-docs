@@ -39,7 +39,20 @@ paths:
     get:
       summary: Your GET endpoint
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    count:
+                      type: number
+                    rows:
+                      $ref: '#/components/schemas/account'
       operationId: get-account
       description: ''
       parameters:
@@ -113,6 +126,58 @@ paths:
               required:
                 - username
                 - password
+    parameters: []
+  '/account/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-account-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '':
+                  type: string
+    put:
+      summary: ''
+      operationId: put-account-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+      description: Update account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullname:
+                  type: string
+                phone:
+                  type: string
+                email:
+                  type: string
+                birth_date:
+                  type: string
+                gender:
+                  type: boolean
+                type:
+                  type: number
+                active:
+                  type: boolean
 components:
   schemas:
     account:
@@ -146,4 +211,8 @@ components:
         updated_at:
           type: string
         updated_by:
+          type: string
+        avatar:
+          type: string
+        phone:
           type: string
